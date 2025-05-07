@@ -83,7 +83,7 @@ export default function CameraPage({ setCapturedVideo }) {
 
   // horiozntal webcam but need vertical video
   const verticalVideoConstraints = {
-    width: 420,
+    width: 480,
     height: 720,
     facingMode: "user",
   };

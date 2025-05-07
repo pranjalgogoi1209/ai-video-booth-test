@@ -89,8 +89,8 @@ export default function CameraPage({ setCapturedVideo }) {
   const verticalConstraints = {
     audio: false,
     video: {
-      width: { min: 480, max: 480 },
-      height: { min: 720, max: 720 },
+      width: { min: 720, max: 720 },
+      height: { min: 480, max: 480 },
       facingMode: "user",
     },
   };
@@ -231,22 +231,11 @@ export default function CameraPage({ setCapturedVideo }) {
             />
           )}
           {previewUrl && (
-            // <video
-            //   controls
-            //   autoPlay
-            //   className={styles.capturedVideo}
-            //   onError={(e) => console.error("Video playback error:", e)}
-            // >
-            //   <source src={previewUrl} type="video/mp4" />
-            // </video>
             <video
               controls
               autoPlay
               className={styles.capturedVideo}
-              style={{
-                transform: "rotate(90deg)",
-                transformOrigin: "center center",
-              }}
+              onError={(e) => console.error("Video playback error:", e)}
             >
               <source src={previewUrl} type="video/mp4" />
             </video>

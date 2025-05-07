@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./cameraPage.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -13,100 +13,33 @@ export default function CameraPage({ setCapturedVideo }) {
   const [isRecording, setIsRecording] = useState(false);
   const [videoBlob, setVideoBlob] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [shouldRotate, setShouldRotate] = useState(false);
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const isMobile = useMediaQuery({ query: "(max-width:1024px)" });
 
-  // Video constraints with basic configuration to support Safari
-  /* const videoConstraints = {
-    width: 736,
-    height: 480,
-    facingMode: "user",
-  }; */
-
-  /* const videoConstraints = {
-    width: isMobile ? { exact: 480 } : { exact: 736 },
-    height: isMobile ? { exact: 736 } : { exact: 480 },
-    aspectRatio: isMobile ? 480 / 736 : 736 / 480,
-    facingMode: "user",
-  }; */
-
-  /*  const constraints = {
-    audio: false,
-    video: {
-      width: { min: 736, max: 736 },
-      height: { min: 480, max: 480 },
-    },
-  }; */
-
-  /*  const constraints = {
-    audio: false,
-    video: {
-      width: isMobile ? { exact: 480 } : { exact: 736 },
-      height: isMobile ? { exact: 736 } : { exact: 480 },
-      facingMode: "user",
-    },
-  }; */
-
-  const videoConstraints = {
-    width: isMobile ? { min: 480, max: 480 } : { min: 720, max: 720 },
-    height: isMobile ? { min: 720, max: 720 } : { min: 480, max: 480 },
-    aspectRatio: 720 / 480,
-    facingMode: "user",
-  };
-
-  const constraints = {
-    audio: false,
-    video: {
-      width: isMobile ? { min: 480, max: 480 } : { min: 720, max: 720 },
-      height: isMobile ? { min: 720, max: 720 } : { min: 480, max: 480 },
-      facingMode: "user",
-    },
-  };
-
-  const tabletVideoConstraints = {
-    width: isMobile ? { min: 720, max: 720 } : { min: 480, max: 480 },
-    height: isMobile ? { min: 480, max: 480 } : { min: 720, max: 720 },
-    aspectRatio: 480 / 720,
-    facingMode: "user",
-  };
-
-  const forTabletConstraints = {
-    audio: false,
-    video: {
-      width: isMobile ? { min: 720, max: 720 } : { min: 720, max: 720 },
-      height: isMobile ? { min: 480, max: 480 } : { min: 480, max: 480 },
-      facingMode: "user",
-    },
-  };
-
-  // horiozntal webcam but need vertical video
   const verticalVideoConstraints = {
-    width: { min: 720, max: 720 },
-    height: { min: 480, max: 480 },
+    width: { min: 480, max: 480 },
+    height: { min: 720, max: 720 },
   };
   const verticalConstraints = {
     audio: false,
     video: {
-      width: { min: 720, max: 720 },
-      height: { min: 480, max: 480 },
+      width: { min: 480, max: 480 },
+      height: { min: 720, max: 720 },
       facingMode: "user",
     },
   };
 
-  /* navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-    const track = stream.getVideoTracks()[0];
-    console.log("Supported settings:", track.getCapabilities());
-  }); */
+  const toastOptions = {
+    position: "top-left",
+    autoClose: 4000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
 
-  // Simplified options to avoid Safari compatibility issues
-  /*   const options = {
-    videoBitsPerSecond: 2500000,
-    mimeType: "video/webm",
-  }; */
-
-  // Stop recording and save the video
   const stopRecording = () => {
     setIsRecording(false);
     mediaRecorderRef.current.stop();
@@ -120,30 +53,8 @@ export default function CameraPage({ setCapturedVideo }) {
     };
   };
 
-  // Handle start recording
   const handleStartRecording = () => {
     setIsRecording(true);
-    // navigator.mediaDevices
-    //   .getUserMedia(constraints)
-    //   .then((stream) => {
-    //     mediaRecorderRef.current = new MediaRecorder(stream, options);
-    //     mediaRecorderRef.current.start();
-    //     mediaRecorderRef.current.ondataavailable = (e) => {
-    //       chunksRef.current.push(e.data);
-    //     };
-    //     setTimeout(() => {
-    //       stopRecording();
-    //     }, 4000);
-    //   })
-    //   .catch((err) => {
-    //     /*   console.error("Error accessing webcam: ", err);
-    //     toast.error(
-    //       "Failed to access webcam. Please check your camera permissions.",
-    //       toastOptions
-    //     ); */
-    //     console.error("Error accessing webcam:", err.name, err.message);
-    //     toast.error(`Camera error: ${err.name} - ${err.message}`, toastOptions);
-    //   });
     navigator.mediaDevices
       .getUserMedia(verticalConstraints)
       .then((stream) => {
@@ -153,7 +64,6 @@ export default function CameraPage({ setCapturedVideo }) {
 
         const options = {
           videoBitsPerSecond: 2500000,
-          // videoBitsPerSecond: 2000000,
           mimeType,
         };
 
@@ -179,22 +89,12 @@ export default function CameraPage({ setCapturedVideo }) {
       });
   };
 
-  // Handle retake
   const handleRetake = () => {
     setPreviewUrl(null);
     setVideoBlob(null);
+    setShouldRotate(false);
   };
 
-  // Toast options
-  const toastOptions = {
-    position: "top-left",
-    autoClose: 4000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "light",
-  };
-
-  // Handle submit
   const handleSubmit = () => {
     if (videoBlob) {
       setCapturedVideo(videoBlob);
@@ -204,14 +104,13 @@ export default function CameraPage({ setCapturedVideo }) {
     }
   };
 
-  // Handle video load to check orientation (optional, can customize as needed)
   const onVideoLoad = (e) => {
     const video = e.target;
-    console.log("Actual resolution:", video.videoWidth, "x", video.videoHeight);
+    const { videoWidth, videoHeight } = video;
+    console.log("Actual resolution:", videoWidth, "x", videoHeight);
 
-    /*  if (video.videoWidth < video.videoHeight) {
-      alert("Please rotate your device for best experience!");
-    } */
+    // If video is wider than tall, rotate it for portrait display
+    setShouldRotate(videoWidth > videoHeight);
   };
 
   return (
@@ -235,6 +134,13 @@ export default function CameraPage({ setCapturedVideo }) {
               controls
               autoPlay
               className={styles.capturedVideo}
+              onLoadedMetadata={onVideoLoad}
+              style={{
+                transform: shouldRotate ? "rotate(90deg)" : "none",
+                transformOrigin: "center center",
+                width: shouldRotate ? "100vh" : "100%",
+                height: shouldRotate ? "100vw" : "auto",
+              }}
               onError={(e) => console.error("Video playback error:", e)}
             >
               <source src={previewUrl} type="video/mp4" />
@@ -272,7 +178,6 @@ export default function CameraPage({ setCapturedVideo }) {
         )}
       </footer>
 
-      {/* logo */}
       <Link
         to={"/"}
         className={styles.logoContainer}

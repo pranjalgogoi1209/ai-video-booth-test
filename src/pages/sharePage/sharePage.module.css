@@ -1,0 +1,12 @@
+.SharePage {
+  /* border: 1px solid orange; */
+  height: calc(100svh - 20svh);
+  gap: 10svh;
+  .generatedVideoContainer {
+    /* border: 1px solid orange; */
+    gap: 10svh;
+    .btnContainer {
+      gap: 3svh;
+    }
+  }
+}

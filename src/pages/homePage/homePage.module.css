@@ -1,0 +1,4 @@
+.HomePage {
+  height: calc(100svh - 20svh);
+  gap: 25svh;
+}

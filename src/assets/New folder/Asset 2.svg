@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780.67 201.28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f2f2f2;
+        font-family: SilverForteGrunge-Grunge, 'Silver Forte Grunge';
+        font-size: 80.73px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text class="cls-1" transform="translate(0 80.2)"><tspan x="0" y="0">PLEASE SELECT</tspan><tspan x="29.49" y="96.88">YOUR GENDER</tspan></text>
+  </g>
+</svg>

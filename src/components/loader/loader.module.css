@@ -1,0 +1,16 @@
+.Loader {
+  width: 30svh;
+  height: 6svh;
+  display: inline-block;
+  position: relative;
+  border: 0.4svh solid var(--themeColor1);
+  justify-content: flex-start !important;
+  padding: 0 0.25%;
+  gap: 1%;
+  .line {
+    background-color: var(--themeColor1);
+    height: 90%;
+    width: 1.5%;
+    animation: animloader 1s linear infinite;
+  }
+}

@@ -1,0 +1,7 @@
+.GenderPage {
+  height: calc(100svh - 20svh);
+  gap: 20svh;
+  .btnContainer {
+    gap: 3svh;
+  }
+}

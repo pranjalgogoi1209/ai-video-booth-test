@@ -1,0 +1,47 @@
+.Qr {
+  border: 1px solid #fff;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  .container {
+    width: 80%;
+    height: 55%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10vw;
+    position: relative;
+
+    .heading {
+      /* border: 1px solid #000; */
+      color: #000;
+      font-size: 6vw;
+    }
+
+    .qrCode {
+      /* border: 1px solid #000; */
+      width: 40vw;
+      margin: 0;
+      padding: 0;
+    }
+
+    .close {
+      position: absolute;
+      top: 5%;
+      right: 5%;
+      font-size: 10vw;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Satisfy&display=swap");
+
+@font-face {
+  font-family: "Deli";
+  src: url("./../public/Silver\ Forte\ Deli.ttf") format("truetype");
+}
+
+.DeliFont {
+  font-family: "Deli";
+}
+
+:root {
+  --themeColor1: #850d70;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  /* border: 1px solid pink; */
+}
+
+body {
+  background: center/cover repeat url("./../src/assets/bg.jpg");
+  height: 100svh;
+  overflow-x: hidden;
+}
+
+h1 {
+  color: var(--themeColor1);
+  font-size: 4svh;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: var(--themeColor1);
+  padding: 1svh 0;
+  border-radius: 5svh;
+  font-size: 3svh;
+  color: #fff;
+  width: 35svh;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeIcon {
+  position: absolute;
+  top: 15svh;
+  right: 2svh;
+  color: var(--themeColor1);
+  font-size: 5svh;
+  cursor: pointer;
+}
+
+/* mobile view */
+@media all and (max-width: 480px) {
+  h1 {
+    font-size: 4svh;
+  }
+  button {
+    width: 32svh;
+    font-size: 3svh;
+  }
+}
